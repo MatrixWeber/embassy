@@ -17,10 +17,15 @@ async fn main(_spawner: Spawner) {
     info!("LED Blinking with Limit Counter and reset button!");
     let (mut leds, button) = init_leds_and_buttons();
     info!("Create Limit Counter!");
-    let mut limit_counter = LimitCounter::new(0, COUNTER_LIMIT);
-    info!("Start blinking loop!");
-    loop {
-        blinking_loop(&mut leds, &mut limit_counter, &button).await;
+    let limit_counter = LimitCounter::new( COUNTER_LIMIT + 6, COUNTER_LIMIT);
+    match limit_counter {
+        Err(s) => println!("Error: {}", s),
+        Ok(mut lc) => {
+            info!("Start blinking loop!");
+            loop {
+                blinking_loop(&mut leds, &mut lc, &button).await;
+            }
+        }
     }
 }
 

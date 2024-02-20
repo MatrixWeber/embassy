@@ -16,8 +16,11 @@ pub trait Show {
 }
 
 impl LimitCounter {
-    pub fn new(value: usize, limit: usize) -> LimitCounter {
-        LimitCounter { value, limit }
+    pub fn new(value: usize, limit: usize) -> Result<LimitCounter, &'static str> {
+        if value >= limit {
+            return Err("input parameter overflow value is equal or bigger then the limit");
+        }
+        return Ok(LimitCounter { value, limit });
     }
 }
 
