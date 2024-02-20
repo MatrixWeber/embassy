@@ -19,8 +19,8 @@ async fn main(_spawner: Spawner) {
     info!("Create Limit Counter!");
     let limit_counter = LimitCounter::new( COUNTER_LIMIT + 6, COUNTER_LIMIT);
     match limit_counter {
-        Err(s) => println!("Error: {}", s),
-        Ok(mut lc) => {
+        None => println!("input parameter overflow value is equal or bigger then the limit"),
+        Some(mut lc) => {
             info!("Start blinking loop!");
             loop {
                 blinking_loop(&mut leds, &mut lc, &button).await;
