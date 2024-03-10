@@ -52,6 +52,18 @@ pub fn init_leds_and_buttons() -> ([Output<'static>; LED_COUNT], Input<'static>)
     (leds, button)
 }
 
+/***
+In Rust gibt es die Konvention, dass wenn ein generischer Parameter wie T nur einmal in der Funktionsdefinition verwendet wird,
+der Compiler implizit annimmt, dass T für die gesamte Dauer der Funktion blinking_loop gültig bleibt.
+Dieses Konzept wird als "elision" bezeichnet.
+
+Dies bedeutet, dass Sie keine explizite Lebenszeit-Annotation benötigen, wenn Sie eine Funktion definieren,
+die eine Referenz auf einen generischen Typ wie &mut T akzeptiert.
+Der Rust-Compiler kann in diesem Fall die Lebenszeit automatisch ableiten.
+
+Die Ausnahme zu dieser Regel wäre, wenn Sie mehrere Referenzen auf T in Ihrer Funktion hätten und Sie spezifizieren müssten,
+welche Lebenszeiten in Bezug auf einander stehen. In diesem Fall müssten Sie explizite Lebenszeit-Annotationen verwenden.
+***/
 async fn blinking_loop<T>(leds: &mut [Output<'_>; LED_COUNT], limit_counter: &mut T, button: &Input<'_>)
 where
     T: Count + Reset + Show,
