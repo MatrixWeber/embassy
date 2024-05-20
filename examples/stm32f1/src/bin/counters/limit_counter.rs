@@ -23,7 +23,6 @@ impl LimitCounter {
     pub fn new(value: usize, limit: usize) -> LimitCounter {
         LimitCounter { value, limit }
     }
-
 }
 
 impl Show for LimitCounter {
@@ -31,10 +30,8 @@ impl Show for LimitCounter {
 }
 
 impl Count for LimitCounter {
-    fn count(&mut self)
-    {
-        if self.value < self.limit
-        {
+    fn count(&mut self) {
+        if self.value < self.limit {
             self.value += 1;
         } else {
             self.reset();
