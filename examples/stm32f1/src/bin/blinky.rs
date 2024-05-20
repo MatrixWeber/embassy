@@ -67,7 +67,7 @@ mod blinky {
     use embassy_stm32::gpio::Output;
     use embassy_time::Timer;
 
-    pub const BLINK_INTERVAL: u64 = 1000;
+    pub const BLINK_INTERVAL: u64 = 500;
 
     pub async fn blinking_loop<T: Count + Show>(leds: &mut [Output<'_>; LED_COUNT], limit_counter: &mut T) {
         let counter_value = limit_counter.get_counter();
