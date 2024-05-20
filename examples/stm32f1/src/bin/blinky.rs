@@ -17,7 +17,7 @@ async fn main(_spawner: Spawner) {
     info!("LED Blinking with Limit Counter and reset button!");
     let (mut leds, button) = init_leds_and_buttons();
     info!("Create Limit Counter!");
-    let limit_counter = LimitCounter::new( COUNTER_LIMIT + 6, COUNTER_LIMIT);
+    let limit_counter = LimitCounter::new( 0, COUNTER_LIMIT);
     match limit_counter {
         None => println!("input parameter overflow value is equal or bigger then the limit"),
         Some(mut lc) => {
@@ -84,7 +84,7 @@ mod blinky {
     use embassy_stm32::gpio::Output;
     use embassy_time::Timer;
 
-    pub const BLINK_INTERVAL: u64 = 1000;
+    pub const BLINK_INTERVAL: u64 = 500;
 
     pub async fn blinking_loop<T: Count + Show>(leds: &mut [Output<'_>; LED_COUNT], limit_counter: &mut T) {
         let counter_value = limit_counter.get_counter();
